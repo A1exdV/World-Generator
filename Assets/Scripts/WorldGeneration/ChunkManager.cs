@@ -1,46 +1,46 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Debug = UnityEngine.Debug;
 
 namespace WorldGeneration
 {
 
     public class ChunkManager : MonoBehaviour
     {
-        
-        [FormerlySerializedAs("chunkScale")]
-        [SerializeField, Tooltip("Height and width of one chunk in world dimension. " +
-                                 "It is also responsible for the size of the grid inside the chunk")] 
+        [SerializeField, Tooltip("Height and width of one chunk in world dimension. It is also responsible for the size of the grid inside the chunk")] 
         private int chunkSize = 10;
         [SerializeField, Tooltip("How many chunks will be displayed around target object.")] 
         private int loadingRadiusInChunks = 5;
         [SerializeField] private Chunk chunkPrefab;
 
-        [SerializeField] private ChunkConfigSo zeroConfig;
+        [SerializeField, Tooltip("Config for start chunk with player.")] 
+        private ChunkConfigSo zeroConfig;
         [SerializeField] private ChunkConfigSo defaultConfig;
 
-        [SerializeField] private Transform target;
-
+        
+        [SerializeField, Tooltip("Object that will be used as center of rendering zone.")] 
+        private Transform target;
+        
         /// <summary>
-        /// All chunks data generated in this session. Something like local save. 
+        /// Save of all created chunks data in this session.
         /// </summary>
         private Dictionary<Vector2, ChunkData> _createdChunkDataDictionary = new Dictionary<Vector2, ChunkData>();
-        /// <summary>
-        /// Chunks that are in loading radius and are shown in game
-        /// </summary>
-        private Dictionary<Vector2, Chunk> _loadedChunkDictionary = new Dictionary<Vector2, Chunk>();
 
         /// <summary>
-        /// Current chunk index with target
+        /// Chunks that are in rendering zone.
+        /// </summary>
+        private Dictionary<Chunk, Vector2> _loadedChunkDictionary = new Dictionary<Chunk, Vector2>();
+        
+        /// <summary>
+        /// Index of a chunk with target object.
         /// </summary>
         private Vector2Int _targetChunkIndex;
 
         private void Awake()
         {
             _targetChunkIndex = WorldPositionToChunksIndex(target.position);
-            CreateChunk(new Vector2Int(0,0),zeroConfig);
-            UpdateLoadingZone(Vector2Int.zero);
+            InstantiateChunkObjects();
         }
 
         private void Update()
@@ -48,15 +48,48 @@ namespace WorldGeneration
             var newTargetChunkIndex = WorldPositionToChunksIndex(target.position);
             if (_targetChunkIndex != newTargetChunkIndex)
             {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
                 _targetChunkIndex = newTargetChunkIndex;
                 UpdateLoadingZone(_targetChunkIndex);
+                stopWatch.Stop();
+                Debug.Log($"Loading zone update took {stopWatch.ElapsedMilliseconds} ms.");
             }
         }
 
         /// <summary>
-        /// Updates the loaded chunks inside the loading zone. Deletes the chunks that came out of it and loads the chunks that just got into the zone.
+        /// This method instantiates chunk objects around the target within a specified loading radius,
+        /// populating them with chunk data.
         /// </summary>
-        /// <param name="center">The center of the radius of the loading zone</param>
+        private void InstantiateChunkObjects()
+        {
+            var xMin = _targetChunkIndex.x - loadingRadiusInChunks;
+            var xMax = _targetChunkIndex.x + loadingRadiusInChunks;
+            var yMin = _targetChunkIndex.y - loadingRadiusInChunks;
+            var yMax = _targetChunkIndex.y + loadingRadiusInChunks;
+            
+            
+            for (int x = xMin; x <= xMax; x++)
+            {
+                for (int y = yMin; y <= yMax; y++)
+                {
+                    var chunk = Instantiate(chunkPrefab,transform);
+                    var index = new Vector2Int(x, y);
+                    
+                    if (index == Vector2Int.zero)
+                        chunk.UpdateChunkData(CreateChunkData(index,zeroConfig));
+                    else
+                        chunk.UpdateChunkData(GetChunkData(index));
+                    _loadedChunkDictionary.Add(chunk,index);
+                    chunk.transform.position = new Vector3(x, 0, y) * chunkSize;
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method updates the loading zone of chunks around the given center.
+        /// It overwrites chunks that have gone beyond the rendering to chunks that have just entered the visibility zone.
+        /// </summary>
         private void UpdateLoadingZone(Vector2Int center)
         {
             var xMin = center.x - loadingRadiusInChunks;
@@ -64,118 +97,79 @@ namespace WorldGeneration
             var yMin = center.y - loadingRadiusInChunks;
             var yMax = center.y + loadingRadiusInChunks;
             
-            UnloadChunks(xMin,xMax,yMin,yMax);
+            List<Chunk> chunkOutOfRenderList = GetChunksOutOfRender(xMin,xMax,yMin,yMax);
             
             for (int x = xMin; x <= xMax; x++)
             {
                 for (int y = yMin; y <= yMax; y++)
                 {
-                    if (!_loadedChunkDictionary.ContainsKey(new Vector2(x, y)))
+                    if (!_loadedChunkDictionary.ContainsValue(new Vector2(x, y)))
                     {
-                        LoadChunk(new Vector2Int(x,y));
+                        _loadedChunkDictionary[chunkOutOfRenderList[^1]] = new Vector2(x, y);
+                        chunkOutOfRenderList[^1].UpdateChunkData(GetChunkData(new Vector2Int(x,y)));
+                        chunkOutOfRenderList[^1].transform.position = new Vector3(x, 0, y) * chunkSize;
+                        chunkOutOfRenderList.Remove(chunkOutOfRenderList[^1]);
                     }
                 }
             }
         }
-
+        
         /// <summary>
-        /// Checks chunks for exiting from the required zone.
+        /// This method returns a list of chunks that are outside the specified render boundaries.
         /// </summary>
-        /// <param name="xMin"></param>
-        /// <param name="xMax"></param>
-        /// <param name="yMin"></param>
-        /// <param name="yMax"></param>
-        private void UnloadChunks(int xMin, int  xMax, int  yMin, int  yMax)
+        private List<Chunk> GetChunksOutOfRender(int xMin, int  xMax, int  yMin, int  yMax)
         {
-            List<Vector2> indexToDestroyList = new List<Vector2>();
+            List<Chunk> chunkList = new List<Chunk>();
             
             foreach (var chunkPair in _loadedChunkDictionary)
             {
-                if (chunkPair.Key.x > xMax || chunkPair.Key.x < xMin || chunkPair.Key.y > yMax || chunkPair.Key.y < yMin)
+                if (chunkPair.Value.x > xMax || chunkPair.Value.x < xMin || chunkPair.Value.y > yMax || chunkPair.Value.y < yMin)
                 {
-                    indexToDestroyList.Add(chunkPair.Key);
+                    chunkList.Add(chunkPair.Key);
                 }
             }
-            foreach (var index in indexToDestroyList)
-            {
-                Destroy(_loadedChunkDictionary[index].gameObject);
-                _loadedChunkDictionary.Remove(index);
-            }
+            return chunkList;
         }
 
         /// <summary>
-        /// Load or create a new chunk, if it was not created earlier
+        /// This method retrieves the chunk data for a given index.
+        /// If the data is not found, it either creates a new chunk data or loads it from a saved dictionary if found.
         /// </summary>
-        /// <param name="index"></param>
-        private void LoadChunk(Vector2Int index)
+        private ChunkData GetChunkData(Vector2Int index)
         {
-            if (_createdChunkDataDictionary.TryGetValue(index, out var chunkJson))
+            if (_createdChunkDataDictionary.ContainsKey(index))
             {
                 //found
-                GetChunkFromSave(index);
+                return GetChunkFromSave(index);
             }
-            else
-            {
-                //absent
-                CreateChunk(index, defaultConfig);
-            }
+            //absent
+            return CreateChunkData(index, defaultConfig);
         }
 
         /// <summary>
-        /// Creates a new chunk
+        /// This method creates a new chunk data with the provided configuration and associates it with the specified index in the dictionary.
         /// </summary>
-        /// <param name="index"></param>
-        private void CreateChunk(Vector2Int index,ChunkConfigSo config)
+        private ChunkData CreateChunkData(Vector2Int index,ChunkConfigSo config)
         {
-            Vector3 worldPosition = new Vector3(index.x, 0, index.y) * chunkSize;
-            var chunk = Instantiate(chunkPrefab,worldPosition, Quaternion.identity,transform);
-            chunk.ChunkData = new ChunkData(config,chunkSize);
-            chunk.name = $"Chunk {index.x}, {index.y}";
-            _createdChunkDataDictionary.Add(index, chunk.ChunkData);
-            _loadedChunkDictionary.Add(index, chunk);
+            ChunkData newChunkData = new ChunkData(config,chunkSize);
+            _createdChunkDataDictionary.Add(index, newChunkData);
+            return newChunkData;
         }
 
         /// <summary>
-        /// Get already created chunk from saved dictionary 
+        /// This method retrieves a chunk data from the saved dictionary based on the given index.
         /// </summary>
-        /// <param name="index"></param>
-        private void GetChunkFromSave(Vector2Int index)
+        private ChunkData GetChunkFromSave(Vector2Int index)
         {
-            Vector3 worldPosition = new Vector3(index.x, 0, index.y) * chunkSize;
-            var chunk = Instantiate(chunkPrefab, worldPosition, Quaternion.identity,transform);
-            chunk.ChunkData = _createdChunkDataDictionary[index];
-            chunk.name = $"Chunk {index.x}, {index.y}";
-            _loadedChunkDictionary.Add(index, chunk);
+            ChunkData newChunkData = _createdChunkDataDictionary[index];
+            return newChunkData;
         }
-
+        
         /// <summary>
-        /// Convert json to chunk data
+        /// This method converts a world position into chunk coordinate.
         /// </summary>
-        /// <param name="json">json</param>
-        /// <returns>chunk class</returns>
-        private Chunk JsonToChunk(string json)
-        {
-            return JsonConvert.DeserializeObject<Chunk>(json);
-        }
-
-        /// <summary>
-        /// Convert chunk data to json
-        /// </summary>
-        /// <param name="chunk">chunk class</param>
-        /// <returns>json</returns>
-        private string ChunkToJson(Chunk chunk)
-        {
-            return JsonConvert.SerializeObject(chunk,Formatting.None,new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
-        }
-
-        /// <summary>
-        /// Convert world dimension coordinates into chunks indexes. 
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
+        /// <param name="position">World position</param>
+        /// <returns>Corresponding chunk index</returns>
         private Vector2Int WorldPositionToChunksIndex(Vector3 position)
         {
             return new Vector2Int((int)(position.x/chunkSize),(int)(position.z/chunkSize));

@@ -543,7 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  mouseSensitivity: 0.5
+  mouseSensitivity: 0.3
   yCameraClamp: {x: -45, y: 45}
   cameraPoint: {fileID: 595967168}
 --- !u!4 &1425598762
@@ -587,7 +587,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!1 &1794235142
 GameObject:

@@ -16,5 +16,14 @@ MonoBehaviour:
   <DecorativeChance>k__BackingField: 0.2
   <ObstaclePrefabArray>k__BackingField:
   - {fileID: 4317664525209523989, guid: a4062409342a24544af1402a028787d0, type: 3}
+  - {fileID: 7726874950148169191, guid: 29d51b3582690a640a828fb3c6878b7c, type: 3}
+  - {fileID: 7006723348847436851, guid: fd399c72108c9004d889c052f9385743, type: 3}
+  - {fileID: 3828749665706525452, guid: 5be6179a5b6c8a04ea3c7219346df090, type: 3}
+  - {fileID: 8896065274673315663, guid: 863ed155a4018de41b28ef9c67beb451, type: 3}
+  - {fileID: 7547669375835812905, guid: 00e30a8eb214f6641975bdc468041d19, type: 3}
+  - {fileID: 978501434395558778, guid: 1748b9e1beb5ade478da54c6e3715b53, type: 3}
   <DecorativePrefabArray>k__BackingField:
+  - {fileID: 7232259241415952526, guid: deb85baac83224b4c94888a483083567, type: 3}
   - {fileID: 3326470668658104779, guid: deee2d8312b628a43ac31d3caeb5f9b5, type: 3}
+  - {fileID: 8671733867736216872, guid: 563aca09a5095d1488160c13cc01f0f9, type: 3}
+  - {fileID: 5749739640710372757, guid: 05d05b4c18296804da082e47dfcd4882, type: 3}
