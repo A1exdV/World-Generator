@@ -53,7 +53,7 @@ Plane with 2 side walls and 2 smoler walls for colosing or opening passages.
 
 ## Chunk
 
-Script on chunk prefab object. Instantiate decorative and obstacles object in chunk based on Chunk Data.
+Script on chunk prefab object. Instantiate decorative and obstacles object in chunk based on [Chunk Data](https://github.com/A1exdV/World-Generator/tree/main#chunk-data).
 Also hide or show passages.
 
 ```C#
@@ -76,7 +76,7 @@ Also hide or show passages.
 
 ## Chunk Data
 
-Store all the information about a separate chunk
+Store the information about [objects](https://github.com/A1exdV/World-Generator/tree/main#objectdata) and passage state in a separate chunk
 
 ```C#
     public class ChunkData
