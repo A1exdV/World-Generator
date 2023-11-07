@@ -7,6 +7,9 @@ namespace WorldGeneration
     {
         public Dictionary<Vector2Int, ObjectData> StaticObjectsDictionary { get; private set; }
         
+        public bool IsUpWayOpen { get; private set; }
+        public bool IsRightWayOpen { get; private set; }
+        
         /// <summary>
         /// Constructor for ChunkData.
         /// Initializes StaticObjectsDictionary and adds objects to it based on the provided configuration.
@@ -19,6 +22,8 @@ namespace WorldGeneration
             
             AddObjects(config.ObstaclePrefabArray, config.ObstacleChance, chunkSize);
             AddObjects(config.DecorativePrefabArray, config.DecorativeChance, chunkSize);
+
+            SetWays(config.OpenWayChance);
         }
 
         /// <summary>
@@ -52,8 +57,14 @@ namespace WorldGeneration
             int direction = Random.Range(0, 5);
             return 90 * direction;
         }
-    }
 
+        private void SetWays(float openChance)
+        {
+            IsUpWayOpen = Random.Range(0, 1f) > openChance;
+            IsRightWayOpen = Random.Range(0, 1f) > openChance;
+        }
+    }
+    
     public class ObjectData
     {
         public Transform TransformObject;

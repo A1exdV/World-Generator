@@ -82,6 +82,7 @@ namespace WorldGeneration
                         chunk.UpdateChunkData(GetChunkData(index));
                     _loadedChunkDictionary.Add(chunk,index);
                     chunk.transform.position = new Vector3(x, 0, y) * chunkSize;
+                    chunk.name = $"Chunk {index.x}, {index.y}";
                 }
             }
         }
@@ -108,6 +109,7 @@ namespace WorldGeneration
                         _loadedChunkDictionary[chunkOutOfRenderList[^1]] = new Vector2(x, y);
                         chunkOutOfRenderList[^1].UpdateChunkData(GetChunkData(new Vector2Int(x,y)));
                         chunkOutOfRenderList[^1].transform.position = new Vector3(x, 0, y) * chunkSize;
+                        chunkOutOfRenderList[^1].name = $"Chunk {x}, {y}";
                         chunkOutOfRenderList.Remove(chunkOutOfRenderList[^1]);
                     }
                 }

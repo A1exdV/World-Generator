@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3137548353a18d49ae251a4b288b854, type: 3}
   m_Name: Default Chunk Config
   m_EditorClassIdentifier: 
-  <ObstacleChance>k__BackingField: 0.1
-  <DecorativeChance>k__BackingField: 0.2
+  <ObstacleChance>k__BackingField: 0.05
+  <DecorativeChance>k__BackingField: 0.1
+  <OpenWayChance>k__BackingField: 0.75
   <ObstaclePrefabArray>k__BackingField:
   - {fileID: 4317664525209523989, guid: a4062409342a24544af1402a028787d0, type: 3}
   - {fileID: 7726874950148169191, guid: 29d51b3582690a640a828fb3c6878b7c, type: 3}
@@ -22,6 +23,7 @@ MonoBehaviour:
   - {fileID: 8896065274673315663, guid: 863ed155a4018de41b28ef9c67beb451, type: 3}
   - {fileID: 7547669375835812905, guid: 00e30a8eb214f6641975bdc468041d19, type: 3}
   - {fileID: 978501434395558778, guid: 1748b9e1beb5ade478da54c6e3715b53, type: 3}
+  - {fileID: 8566984568573474759, guid: 777d0fc4e5e9c6f448ad490aea5222e3, type: 3}
   <DecorativePrefabArray>k__BackingField:
   - {fileID: 7232259241415952526, guid: deb85baac83224b4c94888a483083567, type: 3}
   - {fileID: 3326470668658104779, guid: deee2d8312b628a43ac31d3caeb5f9b5, type: 3}

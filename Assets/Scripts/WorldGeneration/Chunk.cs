@@ -5,6 +5,8 @@ namespace WorldGeneration
     public class Chunk : MonoBehaviour
     {
         [SerializeField] private Transform floor;
+        [SerializeField] private GameObject upWayWall;
+        [SerializeField] private GameObject rightWayWall;
         
         /// <summary>
         /// The data associated with this chunk.
@@ -19,6 +21,7 @@ namespace WorldGeneration
             _chunkData = chunkData;
             DestroyChildes();
             InstantiateStaticObjects();
+            SetWayWalls();
         }
 
         /// <summary>
@@ -46,6 +49,12 @@ namespace WorldGeneration
                 objectTransform.localPosition = objectPosition;
                 objectTransform.localEulerAngles = new Vector3(0, staticObject.Value.Rotation, 0);
             }
+        }
+
+        private void SetWayWalls()
+        {
+            upWayWall.SetActive(_chunkData.IsUpWayOpen);
+            rightWayWall.SetActive(_chunkData.IsRightWayOpen);
         }
     }
 }

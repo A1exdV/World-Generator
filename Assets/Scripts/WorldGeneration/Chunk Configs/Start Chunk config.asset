@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ObstacleChance>k__BackingField: 0
   <DecorativeChance>k__BackingField: 0
+  <OpenWayChance>k__BackingField: 1
   <ObstaclePrefabArray>k__BackingField:
   - {fileID: 4317664525209523989, guid: a4062409342a24544af1402a028787d0, type: 3}
   <DecorativePrefabArray>k__BackingField:
