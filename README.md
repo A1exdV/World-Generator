@@ -9,6 +9,9 @@ Editor look video:
 https://github.com/A1exdV/World-Generator/assets/63784286/129c9599-9315-4474-badc-e1bcd809038d
 
 -----------------------
+- [Game Files](https://github.com/A1exdV/World-Generator/tree/main#game-files)
+- [Code](https://github.com/A1exdV/World-Generator/tree/main#code)
+-----------------------
 # Game Files
 
 ## Chunk Manager:
@@ -19,9 +22,9 @@ Responsible for creating and processing chunks in the game world.
 
 - Chunk size - Width and length of the chunk grid and chunk size in the game world.
 - Loading radius in chunks - Sets the rendering area for chunks around a given object.
-- Chunk prefab - Prefab of an empty chunk responsible for visual content in the game world.
-- Zero config - Configuration of an empty chunk for zero coordinates (so that the character does not appear inside the object and there are exits from the chunk).
-- Default config - config used to configure all chunks.
+- [Chunk prefab](https://github.com/A1exdV/World-Generator/tree/main#chunk) - Prefab of an empty chunk responsible for visual content in the game world.
+- [Zero config](https://github.com/A1exdV/World-Generator/tree/main#chunk-config) - Configuration of an empty chunk for zero coordinates (so that the character does not appear inside the object and there are exits from the chunk).
+- [Default config](https://github.com/A1exdV/World-Generator/tree/main#chunk-config) - config used to configure all chunks.
 - Target - object that is the center of rendering chukns
 
 ## Character:
