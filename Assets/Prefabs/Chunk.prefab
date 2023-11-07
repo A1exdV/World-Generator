@@ -57,6 +57,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7538685808201541222}
+  - component: {fileID: 882949083016264708}
+  - component: {fileID: 4464942034583355247}
+  - component: {fileID: 5148503108715840323}
+  - component: {fileID: 1990690182442065074}
   m_Layer: 0
   m_Name: Walls
   m_TagString: Untagged
@@ -86,6 +90,90 @@ Transform:
   - {fileID: 836761181306886467}
   m_Father: {fileID: 7828175301089016391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &882949083016264708
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351808887838944235}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.24175492, y: 2, z: 1.6123227}
+  m_Center: {x: 1.9925117, y: 1, z: -1.5895029}
+--- !u!65 &4464942034583355247
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351808887838944235}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6389984, y: 2, z: 0.2330368}
+  m_Center: {x: 1.605235, y: 1, z: -1.9933548}
+--- !u!65 &5148503108715840323
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351808887838944235}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2512146, y: 2, z: 0.8218857}
+  m_Center: {x: 1.9972447, y: 1, z: 1.1977417}
+--- !u!65 &1990690182442065074
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351808887838944235}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8171841, y: 2, z: 0.23255196}
+  m_Center: {x: -1.1992953, y: 1, z: -1.9933134}
 --- !u!1 &7430832189404929747
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +183,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3849331712515103951}
+  - component: {fileID: 5098287081593727098}
   m_Layer: 0
   m_Name: ' UpWay'
   m_TagString: Untagged
@@ -119,6 +208,27 @@ Transform:
   - {fileID: 7061631906535750424}
   m_Father: {fileID: 7538685808201541222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5098287081593727098
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7430832189404929747}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.24175492, y: 2, z: 1.6099291}
+  m_Center: {x: 1.9925117, y: 1, z: 0.01388464}
 --- !u!1 &8794302014064743899
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,6 +238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 836761181306886467}
+  - component: {fileID: 8723360173533348278}
   m_Layer: 0
   m_Name: ' RightWay'
   m_TagString: Untagged
@@ -152,6 +263,27 @@ Transform:
   - {fileID: 5772217806494724944}
   m_Father: {fileID: 7538685808201541222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8723360173533348278
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8794302014064743899}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6167052, y: 2, z: 0.19754334}
+  m_Center: {x: 0.0037153244, y: 1, z: -2.006148}
 --- !u!1001 &711780456393268562
 PrefabInstance:
   m_ObjectHideFlags: 0
