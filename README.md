@@ -2,11 +2,11 @@
 
 Demo video:
 
-https://github.com/A1exdV/World-Generator/assets/63784286/361c877f-3aeb-456f-ad62-dc24e9ff961a
+https://github.com/A1exdV/World-Generator/assets/63784286/d0847354-1974-49e1-9cbf-e405ce36a01b
 
 Editor look video:
 
-https://github.com/A1exdV/World-Generator/assets/63784286/129c9599-9315-4474-badc-e1bcd809038d
+https://github.com/A1exdV/World-Generator/assets/63784286/3b935642-7c18-414a-a7e9-3813b71a5be1
 
 -----------------------
 - [Game Files](https://github.com/A1exdV/World-Generator/tree/main#game-files)
