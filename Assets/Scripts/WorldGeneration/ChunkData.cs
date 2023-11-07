@@ -52,12 +52,21 @@ namespace WorldGeneration
             }
         }
 
+        /// <summary>
+        /// Returns a random multiple of 90
+        /// </summary>
+        /// <returns></returns>
         private float GetRandomRotation()
         {
             int direction = Random.Range(0, 5);
             return 90 * direction;
         }
 
+        /// <summary>
+        /// Set data for way walls.
+        /// </summary>
+        /// <param name="openChance">Chance for ech way to be opened.
+        /// The higher the number, the greater the chance.</param>
         private void SetWays(float openChance)
         {
             IsUpWayOpen = Random.Range(0, 1f) > openChance;
@@ -65,6 +74,10 @@ namespace WorldGeneration
         }
     }
     
+    /// <summary>
+    /// Information for one object in chunk.
+    /// Contain a prefab of an object and his rotation. 
+    /// </summary>
     public class ObjectData
     {
         public Transform TransformObject;

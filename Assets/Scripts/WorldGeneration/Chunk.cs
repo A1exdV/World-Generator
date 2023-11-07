@@ -7,7 +7,7 @@ namespace WorldGeneration
         [SerializeField] private Transform floor;
         [SerializeField] private GameObject upWayWall;
         [SerializeField] private GameObject rightWayWall;
-        
+
         /// <summary>
         /// The data associated with this chunk.
         /// </summary>
@@ -31,12 +31,12 @@ namespace WorldGeneration
         {
             foreach (Transform child in transform)
             {
-                if(child == floor) continue;
-                
+                if (child == floor) continue;
+
                 Destroy(child.gameObject);
             }
         }
-        
+
         /// <summary>
         /// Instantiate static objects within the chunk based on the provided data.
         /// </summary>
@@ -51,6 +51,9 @@ namespace WorldGeneration
             }
         }
 
+        /// <summary>
+        /// Show or hide way's wall depending on chunk data
+        /// </summary>
         private void SetWayWalls()
         {
             upWayWall.SetActive(_chunkData.IsUpWayOpen);

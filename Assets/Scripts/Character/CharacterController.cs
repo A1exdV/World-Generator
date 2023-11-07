@@ -20,10 +20,13 @@ namespace Character
             
             _playerControls.Player.Movement.performed += OnMovementChanged; 
             _playerControls.Player.Movement.canceled += OnMovementChanged;
-
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
+        /// <summary>
+        /// Invoked on player movement's input changes.
+        /// Used to set new direction for character object movement. 
+        /// </summary>
+        /// <param name="obj">Input data</param>
         private void OnMovementChanged(InputAction.CallbackContext obj)
         {
             var direction = obj.ReadValue<Vector2>();
@@ -32,7 +35,15 @@ namespace Character
 
         private void Update()
         {
-            if(_rigidbody.velocity == Vector3.zero) return;
+            ApplyPlayerRotation();
+        }
+
+        /// <summary>
+        /// Rotate character object to current direction
+        /// </summary>
+        private void ApplyPlayerRotation()
+        {
+            if (_rigidbody.velocity == Vector3.zero) return;
             Quaternion targetRotation = Quaternion.LookRotation(_rigidbody.velocity);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
