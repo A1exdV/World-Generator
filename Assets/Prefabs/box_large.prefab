@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: box_large
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f941f40c8dc77d54292bb07f3d38a294, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

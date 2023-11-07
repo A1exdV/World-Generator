@@ -6,9 +6,7 @@ namespace Character
     public class CharacterController : MonoBehaviour
     {
         [SerializeField] private float speed = 10;
-        [SerializeField,Range(0,1)] private float mouseSensitivity = 0.5f;
-        [SerializeField] private Vector2 yCameraClamp;
-        [SerializeField] private Transform cameraPoint;
+        [SerializeField] private float rotationSpeed = 10;
 
         private Vector3 _direction;
         private PlayerControls _playerControls;
@@ -23,9 +21,6 @@ namespace Character
             _playerControls.Player.Movement.performed += OnMovementChanged; 
             _playerControls.Player.Movement.canceled += OnMovementChanged;
 
-            _playerControls.Player.Look.performed += OnMouseDeltaChanged;
-            _playerControls.Player.Look.canceled += OnMouseDeltaChanged;
-
             Cursor.lockState = CursorLockMode.Locked;
         }
 
@@ -35,22 +30,21 @@ namespace Character
             _direction = new Vector3(direction.x, 0, direction.y);
         }
 
-
-        private void OnMouseDeltaChanged(InputAction.CallbackContext obj)
+        private void Update()
         {
-            var delta = obj.ReadValue<Vector2>();
-            
-            transform.eulerAngles += Vector3.up * (delta.x * mouseSensitivity);
-            
-            float cameraAngle = cameraPoint.eulerAngles.x - (delta.y * mouseSensitivity);
-            
-            cameraPoint.localEulerAngles = Vector3.right * cameraAngle;
-            
+            if(_rigidbody.velocity == Vector3.zero) return;
+            Quaternion targetRotation = Quaternion.LookRotation(_rigidbody.velocity);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
+
         private void FixedUpdate()
         {
-            var localDirection = transform.TransformDirection(_direction);
-            _rigidbody.velocity = localDirection * (speed);
+            ApplyPlayerVelocity();
+        }
+
+        private void ApplyPlayerVelocity()
+        {
+            _rigidbody.velocity = _direction * (speed);
         }
 
         private void OnEnable()

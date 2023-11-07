@@ -7,6 +7,7 @@ namespace WorldGeneration
     {
         [field:SerializeField,Range(0,1)]public float ObstacleChance { get; private set; }
         [field:SerializeField,Range(0,1)]public float DecorativeChance { get; private set; }
+        [field:SerializeField,Range(0,1)]public float OpenWayChance { get; private set; }
         
         [field:SerializeField]public Transform[] ObstaclePrefabArray { get; private set; }
         [field:SerializeField]public Transform[] DecorativePrefabArray { get; private set; }
